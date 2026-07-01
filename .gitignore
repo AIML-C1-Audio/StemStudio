@@ -1,0 +1,68 @@
+# Xcode (Explicit Request)
+# NOTE: Usually, project.pbxproj is tracked because it contains the project structure.
+# Ignoring it can cause issues if developers add/remove files or change settings,
+# as those changes won't be shared. It is ignored here per your request.
+*.xcodeproj/project.pbxproj
+
+# Xcode Standard Ignores
+# Build folders
+DerivedData/
+build/
+Products/
+
+# User-specific settings and state (highly prone to merge conflicts)
+xcuserdata/
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+.blackbox/
+
+# Xcode temporary files
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+*.hmap
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Carthage / CocoaPods
+Carthage/Build/
+# Pods/
+# Podfile.lock
+
+# macOS System Files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.byhost
+.trash
+
+# IDEs & Editors
+# VS Code
+.vscode/
+*.code-workspace
+
+# JetBrains
+.idea/
+
+# Python & Virtual Environments (for audio processing/Demucs)
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+.env
+.pytest_cache/
+.mypy_cache/
