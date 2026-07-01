@@ -138,7 +138,3 @@ Metadata dan file disimpan di:
 ```
 
 Mock separation menduplikasi lagu sumber ke empat file agar playback mixer dapat diuji. Mock ini **tidak benar-benar memisahkan audio**.
-
-## Catatan validasi
-
-Semua file Swift telah lolos pemeriksaan parser Swift pada environment pembuatan artifact. Build macOS penuh tetap perlu dijalankan di Xcode karena environment ini tidak menyediakan SDK SwiftUI/AppKit macOS.
