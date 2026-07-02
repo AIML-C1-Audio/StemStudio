@@ -14,8 +14,8 @@ struct SeparationProgressView: View {
 
         var description: String {
             switch self {
-            case .separation: "The mock Demucs adapter is creating vocals, drums, bass, and other stems."
-            case .score: "The mock transcription adapter is creating timed notes for the selected instrument."
+            case .separation: "The Demucs adapter is creating vocals, drums, bass, and other stems."
+            case .score: "The transcription adapter is creating timed notes for the selected instrument."
             }
         }
     }

@@ -12,6 +12,7 @@ protocol StemSeparationService {
 protocol ScoreGenerationService {
     func generateScore(
         from stem: StemAsset,
+        audioURL: URL,
         progress: @escaping (Double, String) -> Void
     ) async throws -> ScoreAsset
 }
@@ -93,8 +94,24 @@ struct MockStemSeparationService: StemSeparationService {
 struct MockScoreGenerationService: ScoreGenerationService {
     func generateScore(
         from stem: StemAsset,
+        audioURL: URL,
         progress: @escaping (Double, String) -> Void
     ) async throws -> ScoreAsset {
+        
+        print("""
+                
+                ===== SCORE SERVICE RECEIVED =====
+                Stem ID       : \(stem.id)
+                Stem type     : \(stem.type.rawValue)
+                Stored path   : \(stem.relativePath)
+                Audio URL     : \(audioURL.absoluteString)
+                Audio path    : \(audioURL.path)
+                File exists   : \(FileManager.default.fileExists(atPath: audioURL.path))
+                File readable : \(FileManager.default.isReadableFile(atPath: audioURL.path))
+                ==================================
+                
+                """)
+        
         let steps: [(Double, String)] = [
             (0.12, "Loading \(stem.type.title) stem"),
             (0.35, "Detecting pitches"),
