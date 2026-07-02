@@ -1,10 +1,13 @@
-# Xcode Standard Ignores
+# ============================================================
+# Xcode
+# ============================================================
+
 # Build folders
 DerivedData/
 build/
 Products/
 
-# User-specific settings and state (highly prone to merge conflicts)
+# User-specific settings
 xcuserdata/
 *.xcuserstate
 *.xcworkspace/xcuserdata/
@@ -12,22 +15,42 @@ xcuserdata/
 *.xcodeproj/project.xcworkspace/xcuserdata/
 .blackbox/
 
-# Xcode temporary files
+# Xcode temporary and generated files
 *.moved-aside
 *.xccheckout
 *.xcscmblueprint
 *.hmap
+*.xcresult
+*.dSYM
+*.dSYM.zip
+*.ipa
 
+# Local Xcode environment
+.xcode.env.local
+
+# ============================================================
 # Swift Package Manager
+# ============================================================
+
 .build/
 .swiftpm/
 
+# ============================================================
 # Carthage / CocoaPods
+# ============================================================
+
 Carthage/Build/
+
+# Uncomment if Pods should not be committed.
 # Pods/
+
+# Podfile.lock is usually committed for applications.
 # Podfile.lock
 
-# macOS System Files
+# ============================================================
+# macOS
+# ============================================================
+
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -41,22 +64,70 @@ Icon
 .VolumeIcon.byhost
 .trash
 
-# IDEs & Editors
-# VS Code
+# ============================================================
+# IDEs and editors
+# ============================================================
+
 .vscode/
 *.code-workspace
-
-# JetBrains
 .idea/
 
-# Python & Virtual Environments (for audio processing/Demucs)
+# ============================================================
+# Python
+# ============================================================
+
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Virtual environments
 .venv/
 venv/
 ENV/
 env/
+
+# Environment variables
 .env
+!.env.example
+
+# Python test and type-check caches
 .pytest_cache/
 .mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Python packaging
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# ============================================================
+# Local Demucs runtime
+# ============================================================
+
+# Contains:
+# - Python virtual environment
+# - Torch model cache and pretrained weights
+# - local test outputs
+# - generated runtime configuration
+.local/
+
+# Demucs CLI/default output folders
+separated/
+output/
+outputs/
+Outputs/
+
+# Temporary audio processing files
+temp/
+tmp/
+*.tmp.wav
+*.tmp.mp3
+
+# Runtime logs and crash reports
+*.log
+*.trace
+*.crash
