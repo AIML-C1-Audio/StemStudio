@@ -105,12 +105,43 @@ struct NoteEvent: Identifiable, Codable, Hashable {
     var confidence: Double
 }
 
+// A single beat within a measure of a real (transcribed) score.
+struct ScoreBeat: Identifiable, Codable, Hashable {
+    let id: UUID
+    var time: TimeInterval
+    var position: Int          // 1...beatsPerBar (1 = downbeat / bar start)
+    var chord: String          // e.g. "F#m"; "N" = no chord
+    var triad: [NoteEvent]     // the chord spelled as triad notes
+    var lyric: String          // lyric words falling on this beat ("" if none)
+}
+
+// One measure (bar) of a real score, delimited by madmom-DBN downbeats.
+struct ScoreMeasure: Identifiable, Codable, Hashable {
+    let id: UUID
+    var number: Int
+    var timeSignature: String  // e.g. "4/4"
+    var start: TimeInterval
+    var end: TimeInterval
+    var beats: [ScoreBeat]
+    var lyric: String          // concatenated lyric line for the measure
+}
+
 struct ScoreAsset: Identifiable, Codable, Hashable {
     let id: UUID
     var stemID: UUID
     var instrument: StemType
     var createdAt: Date
     var notes: [NoteEvent]
+
+    // Populated only for real (vocal) scores; nil for dummy/mock scores so
+    // previously-saved projects keep decoding.
+    var measures: [ScoreMeasure]? = nil
+    var beatsPerBar: Int? = nil
+    var bpm: Double? = nil
+    var lyricsLanguage: String? = nil
+    var key: String? = nil          // detected major key, e.g. "A" (for the staff key signature)
+
+    var isRealScore: Bool { !(measures?.isEmpty ?? true) }
 }
 
 struct PracticeSession: Identifiable, Codable, Hashable {

@@ -7,64 +7,96 @@ struct ScoreViewerView: View {
 
     @State private var zoom = 1.0
 
+    var body: some View {
+        VStack(spacing: 0) {
+            header
+
+            Divider()
+
+            if score.isRealScore {
+                ScoreNotationView(score: score, zoom: zoom)
+            } else {
+                DummyStaffView(notes: score.notes, zoom: zoom)
+            }
+        }
+    }
+
+    private var header: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 2) {
+                Text("\(score.instrument.title) Sheet")
+                    .font(.headline)
+                HStack(spacing: 8) {
+                    Text("Generated \(score.createdAt.formatted(date: .abbreviated, time: .shortened))")
+                    if score.isRealScore {
+                        if let bpm = score.bpm {
+                            Text("· \(Int(bpm)) BPM")
+                        }
+                        if let bpb = score.beatsPerBar {
+                            Text("· \(bpb)/4")
+                        }
+                        if let lang = score.lyricsLanguage {
+                            Text("· lyrics: \(lang)")
+                        }
+                    }
+                }
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            }
+
+            Spacer()
+
+            Button {
+                zoom = max(0.7, zoom - 0.1)
+            } label: {
+                Image(systemName: "minus.magnifyingglass")
+            }
+
+            Text(zoom.formatted(.percent.precision(.fractionLength(0))))
+                .font(.caption.monospacedDigit())
+                .frame(width: 48)
+
+            Button {
+                zoom = min(1.6, zoom + 0.1)
+            } label: {
+                Image(systemName: "plus.magnifyingglass")
+            }
+
+            Button("Start Practice", action: startPractice)
+                .buttonStyle(.borderedProminent)
+        }
+        .padding(18)
+    }
+}
+
+// MARK: - Fallback rendering for dummy/mock scores
+
+private struct DummyStaffView: View {
+    let notes: [NoteEvent]
+    let zoom: Double
+
     private var measures: [[NoteEvent]] {
-        stride(from: 0, to: score.notes.count, by: 8).map { start in
-            Array(score.notes[start..<min(start + 8, score.notes.count)])
+        stride(from: 0, to: notes.count, by: 8).map { start in
+            Array(notes[start..<min(start + 8, notes.count)])
         }
     }
 
     var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("\(score.instrument.title) Sheet")
-                        .font(.headline)
-                    Text("Generated \(score.createdAt.formatted(date: .abbreviated, time: .shortened))")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+        ScrollView([.horizontal, .vertical]) {
+            VStack(spacing: 20) {
+                ForEach(Array(measures.enumerated()), id: \.offset) { index, notes in
+                    DummyMeasureView(number: index + 1, notes: notes)
                 }
-
-                Spacer()
-
-                Button {
-                    zoom = max(0.7, zoom - 0.1)
-                } label: {
-                    Image(systemName: "minus.magnifyingglass")
-                }
-
-                Text(zoom.formatted(.percent.precision(.fractionLength(0))))
-                    .font(.caption.monospacedDigit())
-                    .frame(width: 48)
-
-                Button {
-                    zoom = min(1.6, zoom + 0.1)
-                } label: {
-                    Image(systemName: "plus.magnifyingglass")
-                }
-
-                Button("Start Practice", action: startPractice)
-                    .buttonStyle(.borderedProminent)
             }
-            .padding(18)
-
-            Divider()
-
-            ScrollView([.horizontal, .vertical]) {
-                VStack(spacing: 20) {
-                    ForEach(Array(measures.enumerated()), id: \.offset) { index, notes in
-                        MeasureView(number: index + 1, notes: notes)
-                    }
-                }
-                .scaleEffect(zoom, anchor: .topLeading)
-                .padding(34)
-                .frame(minWidth: 760, alignment: .topLeading)
-            }
-            .background(.white.opacity(0.92))
+            .scaleEffect(zoom, anchor: .topLeading)
+            .padding(34)
+            .frame(minWidth: 760, alignment: .topLeading)
         }
+        .background(.white.opacity(0.92))
     }
 }
 
-private struct MeasureView: View {
+private struct DummyMeasureView: View {
     let number: Int
     let notes: [NoteEvent]
 

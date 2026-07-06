@@ -25,6 +25,8 @@
 		E8B261109DDAC4BEBCD034F3 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A822179B8F811A6A90F4A059 /* ProjectListView.swift */; };
 		F1666B0A13841DED3D515B5A /* SeparationProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B531F70F722D73B33ED097 /* SeparationProgressView.swift */; };
 		F6D729337968BBF443672028 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CDC610DC06EFDBD293B8518 /* Models.swift */; };
+		FA11EA5E0000000000000101 /* AnalysisProcessService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA11EA5E0000000000000102 /* AnalysisProcessService.swift */; };
+		FA11EA5E0000000000000201 /* ScoreNotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA11EA5E0000000000000202 /* ScoreNotationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +51,8 @@
 		C78858B7C431939E182E533D /* StemMixerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StemMixerView.swift; sourceTree = "<group>"; };
 		DC557A0FCC6479AC73AE7AB1 /* ProjectOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectOverviewView.swift; sourceTree = "<group>"; };
 		F1478E6653FD1C7E9EF7C111 /* PracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeView.swift; sourceTree = "<group>"; };
+		FA11EA5E0000000000000102 /* AnalysisProcessService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisProcessService.swift; sourceTree = "<group>"; };
+		FA11EA5E0000000000000202 /* ScoreNotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreNotationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -119,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				65DC9D342FF61A01007732B0 /* DemucsProcessService.swift */,
+				FA11EA5E0000000000000102 /* AnalysisProcessService.swift */,
 				61CD842724D4602795CCD979 /* ProjectRepository.swift */,
 				05C6A706412C6C0086B8A1B2 /* MLServices.swift */,
 				9F503D859170719240631603 /* AudioServices.swift */,
@@ -188,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				0DD0316D035CA81A7C5A2FB6 /* ScoreViewerView.swift */,
+				FA11EA5E0000000000000202 /* ScoreNotationView.swift */,
 			);
 			path = Score;
 			sourceTree = "<group>";
@@ -271,6 +277,7 @@
 				CE06118C995274680863C6A4 /* StemStudioApp.swift in Sources */,
 				521FB18B426BCF1EA800706D /* AppState.swift in Sources */,
 				65DC9D352FF61A09007732B0 /* DemucsProcessService.swift in Sources */,
+				FA11EA5E0000000000000101 /* AnalysisProcessService.swift in Sources */,
 				6E5ADF97B74568D5E0C965A2 /* RootView.swift in Sources */,
 				F6D729337968BBF443672028 /* Models.swift in Sources */,
 				BB0231200CA8D83A89A3CB1B /* ProjectRepository.swift in Sources */,
@@ -285,6 +292,7 @@
 				F1666B0A13841DED3D515B5A /* SeparationProgressView.swift in Sources */,
 				AE05A41035299FD9533E5FDE /* StemMixerView.swift in Sources */,
 				D2A6AB2E08673DDA708B3C82 /* ScoreViewerView.swift in Sources */,
+				FA11EA5E0000000000000201 /* ScoreNotationView.swift in Sources */,
 				9719A353A79745E7825F0AB8 /* PracticeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
