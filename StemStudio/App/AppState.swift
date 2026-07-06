@@ -14,17 +14,25 @@ final class AppState: ObservableObject {
     let repository: ProjectRepository
     private let separationService: any StemSeparationService
     private let scoreService: any ScoreGenerationService
+    private let vocalScoreService: any ScoreGenerationService
 
     init(
         repository: ProjectRepository = ProjectRepository(),
         separationService: any StemSeparationService = DemucsProcessService(),
-        scoreService: any ScoreGenerationService = MockScoreGenerationService()
+        scoreService: any ScoreGenerationService = MockScoreGenerationService(),
+        vocalScoreService: any ScoreGenerationService = AnalysisProcessService()
     ) {
         self.repository = repository
         self.separationService = separationService
         self.scoreService = scoreService
+        self.vocalScoreService = vocalScoreService
 
         loadProjects()
+    }
+
+    // The vocals stem produces a real transcribed score; other stems stay mocked.
+    private func scoreService(for stem: StemAsset) -> any ScoreGenerationService {
+        stem.type == .vocals ? vocalScoreService : scoreService
     }
 
     var selectedProject: SongProject? {
@@ -343,7 +351,7 @@ final class AppState: ObservableObject {
 
         do {
             let score =
-                try await scoreService.generateScore(
+                try await scoreService(for: stem).generateScore(
                     from: stem,
                     audioURL: stemURL
                 ) { [weak self] progressValue, message in
@@ -612,6 +620,7 @@ final class AppState: ObservableObject {
                 .sorted {
                     $0.updatedAt > $1.updatedAt
                 }
+                .map(recoverStaleStage)
 
             selectedProjectID =
                 projects.first?.id
@@ -621,6 +630,23 @@ final class AppState: ObservableObject {
                 "Saved projects could not be loaded: "
                 + error.localizedDescription
         }
+    }
+
+    // A fresh launch means no processing is actually running, so a project left
+    // in a transient stage (separating / generatingScore) by a crashed or
+    // force-quit run would otherwise be stranded on its progress screen with no
+    // way to retry. Revert such projects to their last stable stage.
+    private func recoverStaleStage(_ project: SongProject) -> SongProject {
+        var project = project
+        switch project.stage {
+        case .separating:
+            project.stage = project.stems.isEmpty ? .imported : .separated
+        case .generatingScore, .practicing:
+            project.stage = project.scores.isEmpty ? .separated : .scoreReady
+        default:
+            break
+        }
+        return project
     }
 
     private func persist() throws {

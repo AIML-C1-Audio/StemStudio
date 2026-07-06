@@ -1,0 +1,30 @@
+# StemStudio Analysis runtime — vocal sheet-music generation.
+#
+# This environment is NOT a plain `pip install -r requirements.txt`: madmom and
+# natten must be compiled from source with a Clang workaround and two installed-file
+# patches are applied afterwards. See Scripts/setup_analysis.sh for the full recipe;
+# this file documents the exact pinned versions that recipe installs.
+#
+# Provides: allin1fix (all-in-one-fix) for madmom-DBN beats/downbeats,
+#           librosa for chord recognition, openai-whisper for lyric transcription.
+
+# --- core numerical stack (pinned for madmom 0.16.1 / natten 0.17.5 compat) ---
+numpy==1.23.5
+scipy==1.15.3
+soundfile==0.14.0
+
+# --- torch (all-in-one-fix requires torch<2.8 for the natten 0.17.5 API) ---
+torch==2.7.1
+torchaudio==2.7.1
+
+# --- built from source (see setup_analysis.sh) ---
+natten==0.17.5
+madmom==0.16.1
+all-in-one-fix==2.0.4
+
+# --- lyric transcription ---
+openai-whisper==20250625
+
+# librosa comes in as an all-in-one-fix dependency (0.11.0) and is used by the
+# chord recognizer; pinned here for clarity.
+librosa==0.11.0

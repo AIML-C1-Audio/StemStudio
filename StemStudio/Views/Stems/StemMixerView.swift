@@ -60,7 +60,9 @@ struct StemMixerView: View {
 
                         HStack {
                             Label(
-                                "Output: timed-note score (mock)",
+                                selectedIsVocals
+                                    ? "Output: real lead sheet — chords + lyrics"
+                                    : "Output: timed-note score (mock)",
                                 systemImage: "doc.text.magnifyingglass"
                             )
                             .font(.subheadline)
@@ -106,6 +108,11 @@ struct StemMixerView: View {
 
     private var refreshedStems: [StemAsset] {
         appState.project(withID: project.id)?.stems ?? project.stems
+    }
+
+    private var selectedIsVocals: Bool {
+        guard let selectedStemID else { return false }
+        return project.stems.first { $0.id == selectedStemID }?.type == .vocals
     }
 
     private var transport: some View {
